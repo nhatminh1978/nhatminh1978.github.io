@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #fc5c7d, #6a82fb);
+
+        }
+
+        .form-wrapper {
+            width: 50%;
+            background-color: whitesmoke;
+            padding: 30px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .btn-1 {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            background: linear-gradient(to left, #fc5c7d, #6a82fb);
+            background-size: 150%;
+            transition: 0.5s;
+            color: white
+        }
+
+        .btn-1:hover {
+            background-position: right;
+            transition: 1s
+        }
+
+        .space-50 {
+            width: 100%;
+            display: block;
+            height: 50px !important;
+        }
+
+        .error {
+            color: red !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form id="signIn-form" action="" class="form-wrapper">
+            <h1>Đăng Nhập</h1>
+            <div class="space-50"></div>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tài Khoản</label>
+                <input type="email" name="email" class="form-control" placeholder="Nhập Tài Khoản">
+                <small id="signIn-email-error" class="form-text text-muted error"></small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Mật Khẩu</label>
+                <input type="password" name="password" class="form-control" placeholder="Nhập Mật Khẩu">
+                <small id="signIn-password-error" class="form-text text-muted error"></small>
+
+            </div>
+            <button type="submit" class="btn-1">Đăng Nhập</button>
+
+            <div class="space-50"></div>
+            <p>Bạn chưa có tài khoản <a href="./signup.html">Đăng ký?</a></p>
+        </form>
+    </div>
+
+    <script>
+        // let users = [
+                    //     {
+        //         name: "Nguyễn Văn Cường",
+        //         email: "c@a",
+        //         pass: "a"
+        //     },
+        //     {
+        //         name: "Nguyễn Văn Cường",
+        //         email: "a@a",
+        //         pass: "a"
+        //     },
+        //     {
+        //         name: "Nguyễn Trường Minh",
+        //         email: "b@a",
+        //         pass: "a"
+        //     }
+        // ]
+
+        // localStorage.setItem("users", JSON.stringify(users))
+
+        let formSignIn = document.querySelector('#signIn-form')
+
+
+
+        formSignIn.onsubmit = (e) => {
+            e.preventDefault()
+            let users = JSON.parse(localStorage.getItem("users"))
+            if (users) {
+
+                let email = formSignIn.email.value.trim().toLowerCase();
+                let pass = formSignIn.password.value.trim()
+
+                for (let i = 0; i < users.length; i++) {
+                    setTextError('#signIn-email-error', "")
+                    if (email == users[i].email) {
+                        if (pass == users[i].pass) {
+                            window.open("./cloneindex.html", '_blank');
+                            
+                            
+
+                        } else {
+                            // document.querySelector('#signIn-password-error').innerHTML = "Mật Khẩu sai"
+                            setTextError('#signIn-password-error', 'Mật Khẩu không đúng')
+
+                        }
+                        break;
+                    } else {
+                        // document.querySelector('#signIn-email-error').innerHTML = "Tài Khoản không tồn tại"
+                        setTextError('#signIn-email-error', "Tài Khoản không tồn tại")
+                    }
+                }
+
+            }else{
+                console.log("k co gi")
+            }
+        }
+
+        let setTextError = (query, content) => {
+            document.querySelector(query).innerHTML = content
+        }
+    </script>
+</body>
+
+</html>
